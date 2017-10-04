@@ -179,6 +179,18 @@ else
 	    sudo apt-get install psensor
 		echo "$($RED)Psensor is now installed but you need to manually configure it to show up in panel."
 	fi
+
+	#########################
+	## GIT ##
+	#########################
+	myecho "$($CYANE) Installing git"
+	check "git"
+	if [ $BOOL = true ]; then
+		myecho "$($GREEN)Git already installed"
+	else
+		sudo apt-get install git
+	fi
+
 	#########################
 	## WHATSAPP ##
 	#########################
