@@ -165,10 +165,11 @@ else
 	#########################
 	## BRIGHTNESS CONTROL CENTER ##
 	#########################
-	myecho "$($CYANE) Installing brightness-controller"
-	check "brightness-controller"
+	PROGRAM="brightness-controller"
+	myecho "$($CYANE) Installing $PROGRAM"
+	check $PROGRAM
 	if [ $BOOL = true ]; then
-		myecho "$($GREEN)brightness-controller is already installed"
+		myecho "$($GREEN)$PROGRAM is already installed"
 	else
 		echo '\n' sudo add-apt-repository ppa:apandada1/brightness-controller < yes
 		sudo apt-get update
@@ -187,6 +188,19 @@ else
 	    sudo apt-get update
 	    sudo apt-get install psensor
 		echo "$($ORANGE)Psensor is now installed but you need to manually configure it to show up in panel."
+	fi
+
+	#########################
+	## ZSH ##
+	#########################
+	PROGRAM=zsh
+	myecho "$($CYANE) Installing $PROGRAM"
+	check $PROGRAM
+	if [ $BOOL = true ]; then
+		myecho "$($GREE)$PROGRAM already installed"
+	else
+		sudo apt-get install zsh
+		sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 	fi
 
 	#########################
