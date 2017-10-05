@@ -54,10 +54,10 @@ else
 	myecho "$($CYANE) Building essential"
 	#Python
 	#2.7
-	check "python2.7"
-	if [ $BOOL = true ]; then
-		myecho "$($GREEN)Python 2.7 already exists"
-	else
+	PROGRAM="python2.7"
+	check PROGRAM
+	if [ $BOOL = false ]; then
+		myecho "$($ORANGE)Installing $PROGRAM"
 		cd /usr/src
 		sudo wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
 		sudo tar -xzf Python-2.7.13.tgz
@@ -65,32 +65,41 @@ else
 		sudo ./configure
 		sudo make altinstall
 	fi
+	myecho "$($GREEN)Python 2.7 installed"
 	#3.6
-	check "python3.6"
+	PROGRAM="python3.6"
+	check PROGRAM
 	if [ $BOOL = false ]; then
 		myecho "$($RED)python3.6 not found. Looking for 3.5"
+		PROGRAM="python3.5"
 		check "python3.5"
 	fi
-	if [ $BOOL = true ]; then
-		myecho "$($GREEN)Python 3.6 (or 3.5) already exists"
-	else
+	if [ $BOOL = false ]; then
+		myecho "$($ORANGE)Installing $PROGRAM"
 		sudo add-apt-repository ppa:jonathonf/python-3.6
 		sudo apt-get update
 		sudo apt-get install python3.6
 	fi
+	myecho "$($GREEN)Python 3.6 (or 3.5) installed"
 
 	#HTOP
 	sudo apt-get install htop
 	#GCC
-	check "gcc"
-	if [ $BOOL = true ]; then
+	PROGRAM="gcc"
+	check $PROGRAM
+	if [ $BOOL = false ]; then
+		myecho "$($ORANGE)Installing $PROGRAM"
 		sudo apt-get install gcc
 	fi
+	myecho "$($GREEN)gcc installed"
 	#G++
-	chekck "g++"
-	if [ $BOOL = true ]; then
+	PROGRAM="g++"
+	check $PROGRAM
+	if [ $BOOL = false ]; then
+		myecho "$($ORANGE)Installing $PROGRAM"
         sudo apt-get install g++
 	fi
+	myecho "$($GREEN)g++ installed"
 	#pip
 	wget https://bootstrap.pypa.io/get-pip.py -O $DIR/pip.py
 	sudo python $DIR/pip.py
@@ -132,8 +141,8 @@ else
 	## LATEX ##
 	##########################
 	myecho "$($CYANE) Installing tex"
-	check texlive-full
-	if [ "$(dpkg -s texlive-full)" > /dev/null ]; then
+	check "tex"
+	if [ $BOOL = true ]; then
 		myecho "$($GREEN)texlive-full is already installed"
 	else
 		sudo apt-get install texlive-full texwork texstudio
@@ -167,7 +176,7 @@ else
 	fi
 
 	#########################
-	## CPU TEMP
+	## CPU TEMP ##
 	#########################
 	myecho "$($CYANE) Installing Psensor"
 	check "psensor"
@@ -177,7 +186,7 @@ else
 		cho '\n' | sudo apt-add-repository ppa:jfi/ppa
 	    sudo apt-get update
 	    sudo apt-get install psensor
-		echo "$($RED)Psensor is now installed but you need to manually configure it to show up in panel."
+		echo "$($ORANGE)Psensor is now installed but you need to manually configure it to show up in panel."
 	fi
 
 	#########################
