@@ -120,6 +120,12 @@ else
 	else
  		wget https://atom-installer.github.com/v1.21.0/atom-amd64.deb?s=1506980949&ext=.deb -O atom.deb
 		dpkg --install $DIR/atom.deb
+		###########################
+		## ATOM PACKAGES ##
+		###########################
+		apm install atom-latex
+		apm install autocomplete-python
+		apm install autocomplete-clang
 	fi
 
 	###########################
