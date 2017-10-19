@@ -39,6 +39,8 @@ if [ "$(id -u)" != "0" ]; then
 	myecho "$($RED)You need to be root to execute the script"
 	exit 1
 else
+	cd $DIR
+
 	###########################
 	## UPDATE ##
 	###########################
@@ -119,7 +121,7 @@ else
 		myecho "$($GREEN)Atom already installed."
 	else
  		wget https://atom-installer.github.com/v1.21.0/atom-amd64.deb?s=1506980949&ext=.deb -O atom.deb
-		dpkg --install $DIR/atom.deb
+		dpkg --install atom.deb
 	fi
 
 	###########################
@@ -129,7 +131,7 @@ else
 	if [ -d $CONDADIR ]; then
 		myecho "$($GREEN)Anaconda is already installed"
 	else
-		cd $DIR && wget -nc https://repo.continuum.io/archive/Anaconda3-5.0.0.1-Linux-x86_64.sh -O Anaconda.sh
+		wget -nc https://repo.continuum.io/archive/Anaconda3-5.0.0.1-Linux-x86_64.sh -O Anaconda.sh
 		if [ -f $DIR/Anaconda.sh ]; then
 			chmod +x $DIR/Anaconda.sh && $DIR/Anaconda.sh
 		else
@@ -201,8 +203,50 @@ else
 	fi
 
 	#########################
-	## WHATSAPP ##
+	## GIMP ##
 	#########################
+	myecho "$($CYANE) Installing Gimp"
+	check "gimp"
+	if [ $BOOL = true ]; then
+		myecho "$($GREEN)gimp already installed"
+	else
+		sudo apt-get install gimp
+	fi
 
+	#########################
+	## VLC ##
+	#########################
+	myecho "$($CYANE) Installing VLC"
+	check "vlc"
+	if [ $BOOL = true ]; then
+		myecho "$($GREEN)VLC already installed"
+	else
+		sudo apt-get install vlc browser-plugin-vlc
+	fi
 
+	#########################
+	## Skype ##
+	#########################
+	myecho "$($CYANE) Installing Skype"
+	check "skype"
+	if [ $BOOL = true ]; then
+		myecho "$($GREEN)Skype already installed"
+	else
+		sudo apt-get install skype
+	fi
+
+	#########################
+	## Franz ##
+	#########################
+	myecho "$($CYANE) Installing Franz"
+	check "Franz"
+	if [ $BOOL = true ]; then
+		myecho "$($GREEN)Franz already installed"
+	else
+		mkdir Franz
+		wget https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz -O franz.tgz
+		tar -xvf franz.tgz -C Franz
+		mv Franz/ /usr/opt/Franz
+		ln -s /usr/opt/Franz/Franz /usr/bin
+	fi
 fi
